@@ -1,0 +1,13 @@
+//---------------------EJERCICIO 1 - 13/NOV--------------------------------
+internal class Program
+{
+    private static void Main(string[] args)
+    {
+        Console.Write("Escriba su nombre > ");
+        string nom = Console.ReadLine();
+        Console.ForegroundColor = ConsoleColor.Red; //Cambiar de color la letra
+        Console.Clear();
+        Console.WriteLine($"Bienvenid@ {nom} <3");
+    }
+}
+//------------------------------------------------------------------------
