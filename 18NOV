@@ -1,0 +1,65 @@
+public class Main {
+  static void JuanMetodo() {
+    System.out.println("Hello Juan");
+  }
+
+  public static void main(String[] args) {
+    JuanMetodo();
+  }
+}
+
+//-------------------------------------------------------
+
+// Create a Main class
+public class Main {
+  
+  //Cambio de color
+ 
+  // Create a fullThrottle() method
+  public void fullThrottle() {
+    System.out.println("\u001B[31mEl carro va tan rapido como puede\u001B[0m");
+  }
+
+  // Create a speed() method and add a parameter
+  public void speed(int maxSpeed) {
+    System.out.println("Max speed is: \u001B[31m" + maxSpeed + "\u001B[0mkm/h");
+  }
+
+  // Inside main, call the methods on the myCar object
+  public static void main(String[] args) {
+    Main myCar = new Main();// Create a myCar object
+    myCar.fullThrottle();      // Call the fullThrottle() method
+    myCar.speed(200);          // Call the speed() method
+  }
+}
+
+//----------------------------------------------------------------------------
+
+public class Main {
+  public void Clutch() {
+    System.out.println("Clutch a fondo");
+  }
+
+  public void CambioP() {
+    System.out.println("            1. Primera - Para avanzar el vehiculo, acelere poco a poco mientras va soltando el clucth. (Arrancando desde 0km/h)");
+  }
+  
+  public void CambioN() {
+    System.out.println("            2. Neutro - Para no dañar la caja de cambios del vehiculo en caso\n               de que quiera cambiar su direccion");
+  }
+  
+  public void CambioR() {
+    System.out.println("            3. Reversa - Debe frenar totalmente, tenga cuidado, mire espejos y acelere poco sin soltar\n               el clutch, lo mantiene en un punto de quiebre");
+  }
+}
+class Second {
+  public static void main(String[] args) {
+    Main myCar = new Main();     // Create a myCar object
+    myCar.Clutch();      // Clucth
+    myCar.CambioP();          // Primera
+    myCar.CambioN();          //Neutro
+    myCar.CambioR();          // Reversa
+  }
+}
+
+//---------------------------------------------------------------------------
