@@ -1,0 +1,76 @@
+//CONSTRUCTORES
+
+public class Producto {
+    
+    int x;
+    String nombre;
+
+    public Producto() {
+        nombre = "Hello";
+    }
+
+    public static void main(String[] args) {
+        Producto myObj = new Producto();
+        Producto myObj1 = new Producto();
+        System.out.println(myObj.x);
+        System.out.println(myObj1.nombre);
+    }
+}
+
+//--------------------------------------------------------------------
+//Caso 1 Libro.java
+public class Libro
+{ //Asignacion de atributos o variables a la clase
+    String titulo;
+    String autor;
+    
+    public Libro(){
+        System.out.println("Se ha creado un libro nuevo sin datos");
+    }
+	public static void main(String[] args) { 
+	    Libro myObj = new Libro();
+	}
+}
+
+//-------------------------------------------------------------------
+//Caso 2 Usuario.java
+public class Usuario
+{
+    String nombre;
+    String email;
+    int edad;
+    
+    public Usuario(String n, String e, int ed){
+        nombre = n;
+        email = e;
+        edad = ed;
+    }
+	public static void main(String[] args) {
+	Usuario myObj1 = new Usuario ("Juan", "juanreina07@gmail.com", 21);
+	Usuario myObj2 = new Usuario ("Milher", "milhersan65@gmail.com", 18);
+	Usuario myObj3 = new Usuario ("Yeison", "yes.navarrete7@gmail.com", 19);
+	
+	System.out.println("Usuario N.1 > " + myObj1.nombre + " - " + myObj1.email + " - " + myObj1.edad);
+	System.out.println("Usuario N.2 > " + myObj2.nombre + " - " + myObj2.email + " - " + myObj2.edad);
+	System.out.println("Usuario N.3 > " + myObj3.nombre + " - " + myObj3.email + " - " + myObj3.edad);
+	}
+}
+
+//------------------------------------------------------------------
+//Caso 3 Vehiculo.java
+public class Vehiculo
+{
+    String marca;
+    int modelo;
+    
+    public Vehiculo(String marca, int modelo){
+        this.marca = marca;
+        this.modelo = modelo;
+    }
+	public static void main(String[] args) {
+	    Vehiculo Vehiculo1 = new Vehiculo("Toyota", 2010);
+	    Vehiculo Vehiculo2 = new Vehiculo("Subaru", 2018);
+		System.out.println("Vehiculo N.1 > " + Vehiculo1.marca + " " + Vehiculo1.modelo);
+		System.out.println("Vehiculo N.2 > " + Vehiculo2.marca + " " + Vehiculo2.modelo);
+	}
+}
