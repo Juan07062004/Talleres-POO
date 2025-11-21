@@ -74,3 +74,50 @@ public class Vehiculo
 		System.out.println("Vehiculo N.2 > " + Vehiculo2.marca + " " + Vehiculo2.modelo);
 	}
 }
+
+//---------------------------------------
+//Caso 4 Producto.java
+public class Producto
+{
+    String nombre;
+    double precio;
+    int stock;
+    
+    public Producto (String nombre){
+        this.nombre = nombre;
+        this.precio = 0;
+        this.stock = 0;
+    } 
+    public Producto (String nombre, double precio){
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = 0;
+    } 
+    public Producto (String nombre, double precio, int stock){
+        this.nombre = nombre;
+        this.precio = precio;
+        this.stock = stock;
+    }
+	public void mostrar(){
+		System.out.println("Nombre : " + nombre);
+		System.out.println("Precio : " + precio);
+		System.out.println("Stock : " + stock);
+	}
+}
+
+Main.java
+public class Main {
+    public static void main(String[] args) {
+
+        Producto p1 = new Producto("Lapicero");
+        Producto p2 = new Producto("Cuaderno", 2500);
+        Producto p3 = new Producto("Mochila", 45000, 10);
+
+        p1.mostrar();
+        p2.mostrar();
+        p3.mostrar();
+    }
+}
+//-------------------------------------------------------
+
+Caso 5
