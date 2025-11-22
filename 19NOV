@@ -105,7 +105,7 @@ public class Producto
 	}
 }
 
-Main.java
+// Main.java
 public class Main {
     public static void main(String[] args) {
 
@@ -119,5 +119,208 @@ public class Main {
     }
 }
 //-------------------------------------------------------
+//Caso 5  Empleado.java
+public class Empleado {
 
-Caso 5
+    String nombre;
+    double salario;
+
+    public Empleado(String nombre, double salario) {
+        this.nombre = nombre;
+
+        if (salario < 0) {
+            this.salario = 1300000; // salario mínimo
+        } else {
+            this.salario = salario;
+        }
+    }
+
+    public void mostrar() {
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Salario: " + salario);
+    }
+}
+
+//Main.java
+public class Main {
+    public static void main(String[] args) {
+        Empleado e1 = new Empleado("Carlos", -500);
+        Empleado e2 = new Empleado("Ana", 2500000);
+
+        e1.mostrar();
+        e2.mostrar();
+    }
+}
+//-------------------------------------------
+// Caso 6 Enemigo.java
+public class Enemigo {
+
+    String tipo;
+    int puntosVida;
+
+    // Constructor normal
+    public Enemigo(String tipo, int puntosVida) {
+        this.tipo = tipo;
+        this.puntosVida = puntosVida;
+    }
+
+    // Constructor copia
+    public Enemigo(Enemigo e) {
+        this.tipo = e.tipo;
+        this.puntosVida = e.puntosVida;
+    }
+
+    public void mostrar() {
+        System.out.println("Tipo: " + tipo);
+        System.out.println("Puntos de vida: " + puntosVida);
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Enemigo original = new Enemigo("Orco", 150);
+        Enemigo copia = new Enemigo(original);
+
+        original.mostrar();
+        copia.mostrar();
+    }
+}
+//------------------------------------------------
+// Caso 7  CuentaBancaria.java
+public class CuentaBancaria {
+
+    private String numeroCuenta;
+    private double saldo;
+
+    // Constructor: único momento donde se asigna el número de cuenta
+    public CuentaBancaria(String numeroCuenta, double saldo) {
+        this.numeroCuenta = numeroCuenta;
+        this.saldo = saldo;
+    }
+
+    // Solo getters
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+
+    public double getSaldo() {
+        return saldo;
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        CuentaBancaria c = new CuentaBancaria("ABC123", 500000);
+
+        System.out.println("Número de cuenta: " + c.getNumeroCuenta());
+        System.out.println("Saldo: " + c.getSaldo());
+    }
+}
+//-----------------------------------------------------------
+// Caso 8 Cliente.java
+public class Cliente {
+
+    String nombre;
+    String cedula;
+
+    public Cliente(String nombre, String cedula) {
+        this.nombre = nombre;
+        this.cedula = cedula;
+    }
+}
+
+// Factura.java
+public class Factura {
+
+    double monto;
+    Cliente cliente;
+
+    public Factura(double monto, Cliente cliente) {
+        this.monto = monto;
+        this.cliente = cliente;
+    }
+
+    public void mostrar() {
+        System.out.println("Monto: " + monto);
+        System.out.println("Cliente: " + cliente.nombre);
+        System.out.println("Cédula: " + cliente.cedula);
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+
+        Cliente c = new Cliente("Luis", "123456789");
+        Factura f = new Factura(85000, c);
+
+        f.mostrar();
+    }
+}
+//----------------------------------------------------
+// Caso 9 Rectangulo.java
+public class Rectangulo {
+
+    double base;
+    double altura;
+
+    // Constructor principal
+    public Rectangulo(double base, double altura) {
+        this.base = base;
+        this.altura = altura;
+    }
+
+    // Constructor secundario (cuadrado)
+    public Rectangulo(double lado) {
+        this(lado, lado); // Llama al constructor principal
+    }
+
+    public void mostrar() {
+        System.out.println("Base: " + base);
+        System.out.println("Altura: " + altura);
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Rectangulo r1 = new Rectangulo(10, 5); // Rectángulo
+        Rectangulo r2 = new Rectangulo(7);     // Cuadrado
+
+        r1.mostrar();
+        r2.mostrar();
+    }
+}
+//-----------------------------------------------------------
+// Caso 10 ConfiguracionDB
+public class ConfiguracionDB {
+
+    final String url;
+    final String usuario;
+    final String password;
+
+    // Constructor obligatoriamente debe inicializar los final
+    public ConfiguracionDB(String url, String usuario, String password) {
+        this.url = url;
+        this.usuario = usuario;
+        this.password = password;
+    }
+
+    public void mostrar() {
+        System.out.println("URL: " + url);
+        System.out.println("Usuario: " + usuario);
+        System.out.println("Password: " + password);
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+
+        ConfiguracionDB config = new ConfiguracionDB("www.juank.com","ing","1234");
+
+        config.mostrar();
+    }
+}
