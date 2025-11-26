@@ -1,0 +1,395 @@
+//SETTER Y GETTERS
+
+// Persona.java
+public class Persona {
+  private String nombre; 
+
+  // Getter
+  public String getNombre() {
+    return nombre;
+  }
+
+  // Setter
+  public void setNombre(String newNombre) {
+    this.nombre = newNombre;
+    
+  }
+}
+
+//Main.java
+public class Main{
+    
+    public static void main(String[] args){
+        
+        Persona p = new Persona(); //Objeto
+        p.setNombre("Juank"); //Agregar el valor con SET
+        System.out.println(p.getNombre()); //Imprime el valor mediante el GET
+    }
+}
+//------------------------------------------------------------------------
+//CuentaBancaria
+public class CuentaBancaria {
+
+    //Atributos privados
+    private String numeroCuenta;
+    private double saldo;
+    private String nombreTitular;
+
+    /**
+     * Constructor para inicializar una CuentaBancaria.
+     * @param numeroCuenta El número de la cuenta (9 dígitos).
+     * @param saldoInicial El saldo inicial (se valida que no sea negativo).
+     * @param titular El nombre del titular de la cuenta.
+     */
+    public CuentaBancaria(String numeroCuenta, double saldoInicial, String titular) { // <-- CONSTRUCTOR ACTUALIZADO
+        this.numeroCuenta = numeroCuenta;
+        this.nombreTitular = titular; // Asignación directa del titular
+        setSaldo(saldoInicial); // SET para validar el saldo inicial
+    }
+
+    // --- Métodos de Acceso (Getters) ---
+
+    public String getNumeroCuenta() {
+        return numeroCuenta;
+    }
+    
+    public double getSaldo() {
+        return saldo;
+    }
+
+    // Getter para el nombre del Titular
+    public String getNombreTitular() { // <-- NUEVO GETTER
+        return nombreTitular;
+    }
+
+    // --- Métodos de Modificación (Setter con Validación) ---
+    
+    public void setSaldo(double cantidad) {
+        if (cantidad < 0) {
+            System.out.println("Saldo inválido. La cantidad no puede ser negativa.");
+        } else {
+            this.saldo = cantidad;
+        }
+    }
+    
+    public String toString() {
+        // Formato mejorado para mostrar el titular
+        return "Titular: " + nombreTitular + " | Cuenta: #" + numeroCuenta + " | Saldo: $" + String.format("%.2f", saldo);
+    }
+}
+
+//Main.java
+import java.util.Scanner;
+
+public class Main {
+    
+    public static void main(String[] args) {
+        
+        Scanner scanner = new Scanner(System.in);
+        // Creamos un arreglo para almacenar 3 objetos CuentaBancaria
+        CuentaBancaria[] cuentas = new CuentaBancaria[3]; 
+        
+        System.out.println("--- Creación de Cuentas Bancarias (3 Cuentas) ---");
+        
+        // --- SECCIÓN DE CREACIÓN DE CUENTAS (SE SOLICITA EL TITULAR AQUÍ) ---
+        for (int i = 0; i < cuentas.length; i++) {
+            System.out.println("\n--- Datos para la Cuenta " + (i + 1) + " ---");
+            
+            // 1. Solicitar Nombre del Titular
+            System.out.print("Ingrese el nombre del titular: ");
+            String titular = scanner.nextLine(); // <-- NUEVA SOLICITUD
+            
+            // 2. Solicitar y validar Número de Cuenta (9 dígitos exactos)
+            String numCuenta;
+            do {
+                System.out.print("Ingrese el número de cuenta (9 dígitos): ");
+                numCuenta = scanner.nextLine();
+                if (numCuenta.length() != 9) {
+                    System.out.println("Error: El número de cuenta debe tener exactamente 9 dígitos. Intente de nuevo.");
+                }
+            } while (numCuenta.length() != 9);
+
+            // 3. Solicitar y validar Saldo Inicial (que sea un valor numérico)
+            double saldoInicial = 0.0;
+            boolean entradaValida = false;
+            
+            while (!entradaValida) {
+                System.out.print("Ingrese el saldo inicial: $");
+                if (scanner.hasNextDouble()) {
+                    saldoInicial = scanner.nextDouble();
+                    scanner.nextLine(); 
+                    entradaValida = true;
+                } else {
+                    System.out.println("Error: Por favor, ingrese un valor numérico válido para el saldo.");
+                    scanner.nextLine(); 
+                }
+            }
+            
+            // 4. Crear la cuenta (con el nombre del titular)
+            cuentas[i] = new CuentaBancaria(numCuenta, saldoInicial, titular); // <-- CONSTRUCTOR USADO
+            
+            // Mensaje de éxito o advertencia
+            if (cuentas[i].getSaldo() == saldoInicial && saldoInicial >= 0) {
+                System.out.println("Cuenta " + numCuenta + " creada con éxito.");
+            } else if (saldoInicial < 0) {
+                System.out.println("Cuenta " + numCuenta + " creada. Saldo inicial inválido, establecido a $0.00.");
+            }
+        }
+        
+        System.out.println("\n=================================================");
+        System.out.println("--- Selección y Visualización de Cuenta ---");
+        
+        // --- SECCIÓN DE SELECCIÓN POR ÍNDICE (sin cambios) ---
+        
+        System.out.println("\nCuentas Habilitadas:");
+        for (int i = 0; i < cuentas.length; i++) {
+            // Mostramos el índice (i + 1) y el número de cuenta
+            System.out.println((i + 1) + ". Cuenta #" + cuentas[i].getNumeroCuenta());
+        }
+        
+        int seleccion = -1;
+        boolean seleccionValida = false;
+        
+        while (!seleccionValida) {
+            System.out.print("\nDigite el número (1, 2 o 3) de la cuenta que desea ver: ");
+            
+            if (scanner.hasNextInt()) {
+                seleccion = scanner.nextInt();
+                if (seleccion >= 1 && seleccion <= cuentas.length) {
+                    seleccionValida = true;
+                } else {
+                    System.out.println("Error: Por favor, digite un número entre 1 y " + cuentas.length + ".");
+                }
+            } else {
+                System.out.println("Error: Por favor, ingrese un valor numérico.");
+                scanner.next(); 
+            }
+        }
+        
+        // --- MODIFICACIÓN: Solicitar el nombre del titular antes de mostrar los detalles ---
+        
+        // Consumir la nueva línea pendiente después de la entrada de la selección (nextInt)
+        scanner.nextLine(); 
+        
+        System.out.print("Ingrese el nombre del titular de la cuenta seleccionada (" + seleccion + "): ");
+        String titularIngresado = scanner.nextLine();
+        
+        // Obtener la cuenta seleccionada
+        CuentaBancaria cuentaSeleccionada = cuentas[seleccion - 1];
+        
+        // 4. Verificación y Muestra de Saldo
+        
+        if (cuentaSeleccionada.getNombreTitular().equalsIgnoreCase(titularIngresado)) {
+            System.out.println("\nAcceso Exitoso. Detalles de la Cuenta:");
+            // El método toString() ahora muestra el titular, número y saldo
+            System.out.println(cuentaSeleccionada); 
+            
+        } else {
+            System.out.println("\nError de Acceso: El nombre del titular ingresado no coincide con el registrado para la cuenta #" + cuentaSeleccionada.getNumeroCuenta());
+        }
+        
+        scanner.close();
+    }
+}
+//--------------------------------------------------------------------------------------------------------------------
+//Empleado.java
+/**
+ * Clase Empleado que encapsula nombre, edad y jornada de estudio,
+ * aplicando reglas de negocio a edad y jornada.
+ */
+public class Empleado {
+
+    // Atributos privados
+    private String nombre;
+    private int edad;
+    private String jornadaEstudio; // <-- NUEVO ATRIBUTO
+
+    /**
+     * Constructor para inicializar un empleado.
+     */
+    public Empleado(String nombre, int edadInicial, String jornadaInicial) {
+        setNombre(nombre); // Usa el setter para validar que no sea nulo/vacío
+        setEdad(edadInicial);
+        setJornadaEstudio(jornadaInicial); // <-- Usa el nuevo setter con validación
+    }
+
+    // --- Getters ---
+    
+    public String getNombre() {
+        return nombre;
+    }
+
+    public int getEdad() {
+        return edad;
+    }
+    
+    public String getJornadaEstudio() { // <-- NUEVO GETTER
+        return jornadaEstudio;
+    }
+
+    // --- Setters con Reglas de Negocio ---
+    
+    // Setter para Nombre (Validación básica)
+    public void setNombre(String nuevoNombre) {
+        if (nuevoNombre != null && !nuevoNombre.trim().isEmpty()) {
+            this.nombre = nuevoNombre.trim();
+        } else {
+            this.nombre = "Sin Nombre";
+            System.out.println("⚠️ Advertencia: El nombre no puede estar vacío. Se asignó 'Sin Nombre'.");
+        }
+    }
+
+    // Setter para Edad (Validación 18 a 65)
+    public void setEdad(int nuevaEdad) {
+        if (nuevaEdad >= 18 && nuevaEdad <= 65) {
+            this.edad = nuevaEdad;
+            // System.out.println("✅ Edad asignada correctamente: " + nuevaEdad); // Comentado para no saturar
+        } else {
+            this.edad = 0; // Se fuerza a 0 si es inválido
+            System.out.println("⛔ Error de edad: Edad no permitida para trabajar (" + nuevaEdad + ").");
+        }
+    }
+    
+    // Setter para Jornada de Estudio (Validación Diurno o Nocturno)
+    public void setJornadaEstudio(String nuevaJornada) {
+        String jornadaNormalizada = nuevaJornada != null ? nuevaJornada.trim().toLowerCase() : "";
+        
+        if (jornadaNormalizada.equals("diurno") || jornadaNormalizada.equals("nocturno")) {
+            // Se guarda con mayúscula inicial para uniformidad
+            this.jornadaEstudio = Character.toUpperCase(jornadaNormalizada.charAt(0)) + jornadaNormalizada.substring(1);
+            // System.out.println("✅ Jornada asignada: " + this.jornadaEstudio); // Comentado para no saturar
+        } else {
+            this.jornadaEstudio = "Indefinida";
+            System.out.println("⛔ Error de jornada: Solo se acepta 'Diurno' o 'Nocturno'. Se asignó 'Indefinida'.");
+        }
+    }
+    
+    @Override
+    public String toString() {
+        String infoEdad = (edad == 0) ? "No Válida" : String.valueOf(edad);
+        return String.format("Empleado [Nombre: %s, Edad: %s, Jornada: %s]",
+                             nombre, infoEdad, jornadaEstudio);
+    }
+}
+
+//Main.java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("--- 📝 Registro de Nuevo Empleado ---");
+        
+        // 1. Solicitar Nombre
+        System.out.print("Ingrese el nombre del empleado: ");
+        String nombre = scanner.nextLine();
+        
+        // 2. Solicitar y Validar Edad (Debe ser numérica y entre 18 y 65)
+        int edad = 0;
+        boolean edadValida = false;
+        
+        while (!edadValida) {
+            System.out.print("Ingrese la edad (entre 18 y 65): ");
+            if (scanner.hasNextInt()) {
+                int inputEdad = scanner.nextInt();
+                scanner.nextLine(); // Consumir la nueva línea
+                
+                // Aplicar la regla de negocio directamente
+                if (inputEdad >= 18 && inputEdad <= 65) {
+                    edad = inputEdad;
+                    edadValida = true;
+                } else {
+                    System.out.println("⛔ Error de edad: La edad debe estar entre 18 y 65 años. Intente de nuevo.");
+                }
+            } else {
+                System.out.println("❌ Error: Por favor, ingrese un valor numérico para la edad.");
+                scanner.nextLine(); // Consumir la entrada inválida
+            }
+        }
+        
+        // 3. Solicitar y Validar Jornada (Solo 'Diurno' o 'Nocturno')
+        String jornada = "";
+        boolean jornadaValida = false;
+        
+        while (!jornadaValida) {
+            System.out.print("Ingrese la jornada de estudio (Diurno/Nocturno): ");
+            jornada = scanner.nextLine().trim();
+            String jornadaNormalizada = jornada.toLowerCase();
+            
+            if (jornadaNormalizada.equals("diurno") || jornadaNormalizada.equals("nocturno")) {
+                jornadaValida = true;
+            } else {
+                System.out.println("⛔ Error de jornada: Solo se aceptan 'Diurno' o 'Nocturno'. Intente de nuevo.");
+            }
+        }
+        
+        // 4. Crear el objeto Empleado con los datos validados
+        // Nota: Las validaciones en los setters del objeto solo se activarán si
+        // los datos ya validados por el main son incorrectos (lo cual no debería pasar aquí)
+        Empleado empleado = new Empleado(nombre, edad, jornada);
+        
+        System.out.println("\n=================================================");
+        System.out.println("🎉 Registro Exitoso. Datos del Empleado:");
+        System.out.println(empleado.toString());
+        
+        // --- Ejemplo de Prueba de Validación (Opcional, fuera del flujo principal) ---
+        System.out.println("\n--- Prueba de Corrección Manual (setEdad) ---");
+        empleado.setEdad(70); // Esto fallará internamente
+        System.out.println(empleado.toString()); 
+        
+        scanner.close();
+    }
+}
+//----------------------------------------------------------------------------------------------------------
+//Termometro.java
+public class Termometro {
+    //Almacena la temperatura.
+    private double temperaturaCelsius;
+
+    //Metodo que establece la temperatura interna del termómetro.
+     
+    public void setTemperatura(double temp) {
+        this.temperaturaCelsius = temp;
+        System.out.println("Temperatura interna establecida en " + temp + "°C.");
+    }
+
+    //Devuelve la temperatura actual convertida a grados Fahrenheit.
+    public double getTemperaturaFahrenheit() {
+        
+        // Fórmula de conversión: (C * 1.8) + 32
+        double temperaturaFahrenheit = (this.temperaturaCelsius * 1.8) + 32;
+        return temperaturaFahrenheit;
+    }
+}
+
+//Main.java
+import java.util.Scanner;
+
+public class Main {
+    public static void main(String[] args) {
+        //Leer la entrada del usuario
+        Scanner scanner = new Scanner(System.in);
+        
+        //Pedir al usuario que ingrese la temperatura
+        System.out.print("Por favor, ingrese la temperatura en grados Celsius: ");
+        
+        double tempCelsius = scanner.nextDouble();
+        
+        // Cerrar el scanner
+        scanner.close(); 
+        
+        //Crear una instancia de la clase Termometro
+        Termometro miTermometro = new Termometro();
+
+        System.out.println("\n-> Asignando una temperatura de " + tempCelsius + "°C...");
+        miTermometro.setTemperatura(tempCelsius);//Asignar la temperatura ingresada al termómetro
+
+        //Imprimir la lectura en Fahrenheit.
+        double lecturaFahrenheit = miTermometro.getTemperaturaFahrenheit();
+
+        System.out.println("\n--- Lectura Final ---");
+        System.out.println("\u001B[31mLectura para el usuario (en Fahrenheit): \u001B[0m" + lecturaFahrenheit + "°F");
+    }
+}
+//---------------------------------------------------------------------------------------------------------
