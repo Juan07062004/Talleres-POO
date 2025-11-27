@@ -27,7 +27,7 @@ public class Main{
     }
 }
 //------------------------------------------------------------------------
-//CuentaBancaria
+//1. CuentaBancaria
 public class CuentaBancaria {
 
     //Atributos privados
@@ -192,11 +192,8 @@ public class Main {
     }
 }
 //--------------------------------------------------------------------------------------------------------------------
-//Empleado.java
-/**
- * Clase Empleado que encapsula nombre, edad y jornada de estudio,
- * aplicando reglas de negocio a edad y jornada.
- */
+//2. Empleado.java
+
 public class Empleado {
 
     // Atributos privados
@@ -235,7 +232,7 @@ public class Empleado {
             this.nombre = nuevoNombre.trim();
         } else {
             this.nombre = "Sin Nombre";
-            System.out.println("⚠️ Advertencia: El nombre no puede estar vacío. Se asignó 'Sin Nombre'.");
+            System.out.println("Advertencia: El nombre no puede estar vacío. Se asignó 'Sin Nombre'.");
         }
     }
 
@@ -243,10 +240,10 @@ public class Empleado {
     public void setEdad(int nuevaEdad) {
         if (nuevaEdad >= 18 && nuevaEdad <= 65) {
             this.edad = nuevaEdad;
-            // System.out.println("✅ Edad asignada correctamente: " + nuevaEdad); // Comentado para no saturar
+            // System.out.println("Edad asignada correctamente: " + nuevaEdad); // Comentado para no saturar
         } else {
             this.edad = 0; // Se fuerza a 0 si es inválido
-            System.out.println("⛔ Error de edad: Edad no permitida para trabajar (" + nuevaEdad + ").");
+            System.out.println("Error de edad: Edad no permitida para trabajar (" + nuevaEdad + ").");
         }
     }
     
@@ -257,10 +254,10 @@ public class Empleado {
         if (jornadaNormalizada.equals("diurno") || jornadaNormalizada.equals("nocturno")) {
             // Se guarda con mayúscula inicial para uniformidad
             this.jornadaEstudio = Character.toUpperCase(jornadaNormalizada.charAt(0)) + jornadaNormalizada.substring(1);
-            // System.out.println("✅ Jornada asignada: " + this.jornadaEstudio); // Comentado para no saturar
+            // System.out.println("Jornada asignada: " + this.jornadaEstudio); // Comentado para no saturar
         } else {
             this.jornadaEstudio = "Indefinida";
-            System.out.println("⛔ Error de jornada: Solo se acepta 'Diurno' o 'Nocturno'. Se asignó 'Indefinida'.");
+            System.out.println("Error de jornada: Solo se acepta 'Diurno' o 'Nocturno'. Se asignó 'Indefinida'.");
         }
     }
     
@@ -279,7 +276,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         
-        System.out.println("--- 📝 Registro de Nuevo Empleado ---");
+        System.out.println("--- Registro de Nuevo Empleado ---");
         
         // 1. Solicitar Nombre
         System.out.print("Ingrese el nombre del empleado: ");
@@ -300,10 +297,10 @@ public class Main {
                     edad = inputEdad;
                     edadValida = true;
                 } else {
-                    System.out.println("⛔ Error de edad: La edad debe estar entre 18 y 65 años. Intente de nuevo.");
+                    System.out.println("Error de edad: La edad debe estar entre 18 y 65 años. Intente de nuevo.");
                 }
             } else {
-                System.out.println("❌ Error: Por favor, ingrese un valor numérico para la edad.");
+                System.out.println("Error: Por favor, ingrese un valor numérico para la edad.");
                 scanner.nextLine(); // Consumir la entrada inválida
             }
         }
@@ -320,7 +317,7 @@ public class Main {
             if (jornadaNormalizada.equals("diurno") || jornadaNormalizada.equals("nocturno")) {
                 jornadaValida = true;
             } else {
-                System.out.println("⛔ Error de jornada: Solo se aceptan 'Diurno' o 'Nocturno'. Intente de nuevo.");
+                System.out.println("Error de jornada: Solo se aceptan 'Diurno' o 'Nocturno'. Intente de nuevo.");
             }
         }
         
@@ -342,7 +339,92 @@ public class Main {
     }
 }
 //----------------------------------------------------------------------------------------------------------
-//Termometro.java
+//3. Producto.java
+public class Producto {
+    // 1. Atributos privados
+    // 'codigoBarras' será inmutable (Read-Only)
+    private String codigoBarras;
+    
+    // 'precio' será mutable (Read/Write)
+    private double precio;
+
+    // 2. Constructor: Única forma de inicializar 'codigoBarras'
+    public Producto(String codigoBarras, double precioInicial) {
+        this.codigoBarras = codigoBarras;
+        this.precio = precioInicial;
+        System.out.println("Producto creado con Código de Barras: " + this.codigoBarras);
+    }
+
+    // 3. Getter para 'codigoBarras'
+    // Permite leer el valor, pero no modificarlo.
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    // IMPORTANTE: NO se crea un método setCodigoBarras() 
+    // Esto asegura que, una vez asignado en el constructor, 
+    // el código de barras NUNCA se pueda cambiar.
+
+    // 4. Getter para 'precio'
+    public double getPrecio() {
+        return precio;
+    }
+
+    // 5. Setter para 'precio'
+    // Permite modificar el valor del precio.
+    public void setPrecio(double nuevoPrecio) {
+        if (nuevoPrecio >= 0) {
+            this.precio = nuevoPrecio;
+            System.out.println("Precio actualizado a: $" + nuevoPrecio);
+        } else {
+            System.out.println("ERROR: El precio no puede ser negativo.");
+        }
+    }
+
+    // Método de utilidad para mostrar datos
+    public void mostrarDatos() {
+        System.out.println("\n--- Datos del Producto ---");
+        System.out.println("Código de Barras: " + this.codigoBarras);
+        System.out.println("Precio: $" + this.precio);
+        System.out.println("--------------------------");
+    }
+}
+
+//Main.java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- PRUEBA DE PRODUCTO INMUTABLE ---");
+
+        // 1. Crear una instancia del producto
+        Producto miJabon = new Producto("7501000100251", 15.50);
+        miJabon.mostrarDatos();
+
+        // 2. MODIFICAR el precio (Permitido)
+        System.out.println("\n*** Intentando cambiar el precio ***");
+        miJabon.setPrecio(18.99);
+        miJabon.mostrarDatos();
+
+        // 3. INTENTAR MODIFICAR el código de barras (Imposible)
+        System.out.println("\n*** Intentando cambiar el código de barras ***");
+        
+        // El siguiente código provocaría un ERROR DE COMPILACIÓN 
+        // (o al menos un warning, dependiendo del IDE), ya que NO existe el método setCodigoBarras().
+        //
+        // miJabon.setCodigoBarras("9999999999999"); 
+        //
+        // La única forma de cambiar el código de barras sería modificarlo 
+        // directamente en la clase 'Producto', violando la encapsulación 
+        // (por ejemplo, haciendo 'codigoBarras' público) o re-instanciando el objeto.
+        
+        System.out.println("Comentario: No se puede cambiar el código de barras porque la clase 'Producto'");
+        System.out.println("NO expone un método 'setCodigoBarras()'. Este atributo es de solo lectura (Read-Only).");
+
+        // 4. Verificación final: El código de barras sigue siendo el original
+        System.out.println("\nCódigo de barras final (inmutable): " + miJabon.getCodigoBarras());
+    }
+}
+//----------------------------------------------------------------------------------------------------------
+//4. Termometro.java
 public class Termometro {
     //Almacena la temperatura.
     private double temperaturaCelsius;
@@ -393,3 +475,76 @@ public class Main {
     }
 }
 //---------------------------------------------------------------------------------------------------------
+//5. Usuario.java
+public class Usuario {
+    // 1. Atributos privados
+    private String username;
+    private String password; // ¡Este atributo es sensible y no tendrá getter!
+
+    // 2. Constructor (Opcional, pero útil)
+    public Usuario(String username, String password) {
+        this.username = username;
+        setPassword(password); // Usamos el setter para establecer la contraseña
+    }
+
+    // 3. Getter y Setter para 'username' (Normales)
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    // 4. Setter para 'password'
+    // Permite definir la contraseña inicial o cambiarla.
+    public void setPassword(String pass) {
+        // En una aplicación real, aquí se usaría un algoritmo de hashing (ej. bcrypt)
+        // para guardar la contraseña de forma segura, no el texto plano.
+        this.password = pass; 
+        System.out.println("Contraseña para el usuario '" + this.username + "' establecida (NO guardada de forma segura en este ejemplo).");
+    }
+
+    // 5. Método de Verificación (Reemplaza al Getter)
+    // Compara el intento del usuario con la contraseña almacenada.
+    public boolean verificarPassword(String intento) {
+        // Usamos .equals() para la comparación de cadenas
+        return this.password.equals(intento);
+    }
+    
+    // no se crea un método getPassword()
+    // Esto previene que cualquier otra parte del código pueda leer la contraseña almacenada.
+}
+
+//Main.java
+public class Main {
+    public static void main(String[] args) {
+        System.out.println("--- SIMULACIÓN DE SISTEMA DE LOGIN ---");
+
+        // 1. Crear una instancia de Usuario (Registro/Creación de Cuenta)
+        // Estableciendo el nombre de usuario y la contraseña inicial.
+        Usuario user1 = new Usuario("admin", "claveSecreta123");
+        System.out.println("\nUsuario creado: " + user1.getUsername());
+
+        // 2. Intentar un inicio de sesión con una clave INCORRECTA
+        System.out.println("\n*** Intento de Login 1: Clave Incorrecta ***");
+        String intentoIncorrecto = "otraClave";
+        
+        if (user1.verificarPassword(intentoIncorrecto)) {
+            System.out.println("Login Exitoso.");
+        } else {
+            System.out.println("Login Fallido: Contraseña incorrecta.");
+        }
+
+        // 3. Intentar un inicio de sesión con la clave CORRECTA
+        System.out.println("\n*** Intento de Login 2: Clave Correcta ***");
+        String intentoCorrecto = "claveSecreta123";
+        
+        if (user1.verificarPassword(intentoCorrecto)) {
+            System.out.println("Login Exitoso. ¡Bienvenido!");
+        } else {
+            System.out.println("Login Fallido: Contraseña incorrecta.");
+        }
+    }
+}
+//-------------------------------------------------------------------------------------------
