@@ -1,0 +1,336 @@
+//1. CuentaBancaria.java
+class CuentaBancaria {
+    // 1. Variable privada de respaldo (backing field)
+    private double saldo;
+
+    // 2. Implementación de la Propiedad pública Saldo (Getter)
+    public double getSaldo() {
+        return saldo;
+    }
+
+    // 2. Implementación de la Propiedad pública Saldo (Setter con validación)
+    public void setSaldo(double nuevoSaldo) {
+        if (nuevoSaldo >= 0) {
+            this.saldo = nuevoSaldo;
+        } else {
+            // Asigna 0 y muestra una advertencia [cite: 5]
+            System.out.println("ADVERTENCIA: Saldo no puede ser negativo. Se asignó 0.");
+            this.saldo = 0;
+        }
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        CuentaBancaria cuenta = new CuentaBancaria();
+        cuenta.setSaldo(1000); // Saldo inicial
+        System.out.println("Saldo inicial: " + cuenta.getSaldo()); // Salida: 1000.0
+
+        // Prueba 3. intentando asignar un saldo de -500 [cite: 9]
+        cuenta.setSaldo(-500); // Activa la advertencia y asigna 0
+        System.out.println("Saldo después de intento negativo: " + cuenta.getSaldo()); // Salida: 0.0
+    }
+}
+//-----------------------------------------------------------------------------------------------
+//2. Rectangulo,java
+class Rectangulo {
+    // 1. Propiedades de lectura/escritura para Base y Altura
+    private double base;
+    private double altura;
+
+    public double getBase() { return base; }
+    public void setBase(double base) { this.base = base; }
+
+    public double getAltura() { return altura; }
+    public void setAltura(double altura) { this.altura = altura; }
+
+    // 2. Propiedad Area configurada únicamente con el bloque GET (Read-Only)
+    public double getArea() {
+        // Retorna la fórmula matemática (base * altura) [cite: 16, 12]
+        return base * altura;
+    }
+    
+    // NOTA: No se define un setArea()
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Rectangulo rect = new Rectangulo();
+        rect.setBase(5.0);
+        rect.setAltura(8.0);
+        
+        System.out.println("Base: " + rect.getBase() + ", Altura: " + rect.getAltura());
+        System.out.println("Área calculada: " + rect.getArea()); // Salida: 40.0
+        
+        // Opcional: intentar escribir rect. Area = 10 (Generaría error de compilación en Java) [cite: 18]
+        // rect.setArea(10); // <--- Esto generaría un error si no existiera el método.
+    }
+}
+//--------------------------------------------------------------------------------------------
+//3. Termostato.java
+class Termostato {
+    // 1. Declaración de la variable privada interna
+    private int temperatura;
+    private final int TEMP_MIN = 16;
+    private final int TEMP_MAX = 30;
+
+    public int getTemperatura() { return temperatura; }
+    
+    // 2. Lógica condicional completa dentro del bloque SET para el "Clamping"
+    public void setTemperatura(int nuevaTemperatura) {
+        if (nuevaTemperatura < TEMP_MIN) {
+            // Asigna el límite inferior
+            this.temperatura = TEMP_MIN; // 16 [cite: 22]
+        } else if (nuevaTemperatura > TEMP_MAX) {
+            // Asigna el límite superior
+            this.temperatura = TEMP_MAX; // 30 [cite: 22]
+        } else {
+            // Si está dentro del rango, guarda el valor exacto [cite: 22]
+            this.temperatura = nuevaTemperatura;
+        }
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Termostato term = new Termostato();
+        term.setTemperatura(25);
+        System.out.println("Temp. asignada 25: " + term.getTemperatura()); // Salida: 25
+
+        term.setTemperatura(50); // Intento fuera del límite [cite: 26]
+        System.out.println("Temp. asignada 50: " + term.getTemperatura()); // Salida: 30
+
+        term.setTemperatura(10); // Intento bajo el límite
+        System.out.println("Temp. asignada 10: " + term.getTemperatura()); // Salida: 16
+    }
+}
+//---------------------------------------------------------------------------------------
+//4. Usuario.java
+class Usuario {
+    // 1. Variable privada de tipo string
+    private String nombreUsuario;
+
+    public String getNombreUsuario() { return nombreUsuario; }
+
+    // 2. Bloque SET que utilice .toUpperCase() antes de asignar
+    public void setNombreUsuario(String nuevoNombre) {
+        // Convierte el valor entrante a mayúsculas antes de la asignación [cite: 32]
+        this.nombreUsuario = nuevoNombre.toUpperCase(); 
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Usuario user = new Usuario();
+        user.setNombreUsuario("juan.reina"); // Asigna el valor en minúsculas
+        
+        // Imprime la propiedad para ver el valor en mayúsculas [cite: 33]
+        System.out.println("Nombre guardado: " + user.getNombreUsuario()); 
+    }
+}
+//---------------------------------------------------------------------------------
+//5. Automovil.java
+class Automovil {
+    // 1. Variable privada para almacenar el kilometraje actual
+    private int kilometraje;
+
+    public int getKilometraje() { return kilometraje; }
+
+    // 2. Bloque SET que compare el valor entrante (value) contra la variable privada
+    public void setKilometraje(int nuevoKilometraje) {
+        // 3. Solo se asigna si el nuevo es mayor [cite: 40]
+        if (nuevoKilometraje > this.kilometraje) {
+            this.kilometraje = nuevoKilometraje;
+        } else {
+            // Mantiene el valor original si el nuevo es menor [cite: 41]
+            System.out.println("ADVERTENCIA: Intento de bajar el kilometraje rechazado. Valor actual: " + this.kilometraje);
+        }
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Automovil auto = new Automovil();
+        auto.setKilometraje(10000); // Kilometraje inicial [cite: 36]
+        System.out.println("Kilometraje inicial: " + auto.getKilometraje()); // Salida: 10000
+
+        // Intento de bajar el kilometraje
+        auto.setKilometraje(5000); // Activa la advertencia [cite: 36]
+        System.out.println("Kilometraje después de intento: " + auto.getKilometraje()); // Salida: 10000
+        
+        // Asignación válida
+        auto.setKilometraje(10500); 
+        System.out.println("Kilometraje actualizado: " + auto.getKilometraje()); // Salida: 10500
+    }
+}
+//-------------------------------------------------------------------------------------------
+//6. Persona.java
+class Persona {
+    // 1. Variable privada de tipo entero
+    private int edad;
+
+    public int getEdad() { return edad; }
+
+    // 2. Bloque SET que lanza una Excepción si no cumple el rango
+    public void setEdad(int nuevaEdad) {
+        if (nuevaEdad < 0 || nuevaEdad > 120) {
+            // Lanza una excepción al encontrar un error crítico de datos [cite: 48, 44]
+            throw new IllegalArgumentException("ERROR: Edad inválida (" + nuevaEdad + "). Debe estar entre 0 y 120 años.");
+        }
+        this.edad = nuevaEdad;
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Persona p = new Persona();
+        try {
+            p.setEdad(35);
+            System.out.println("Edad asignada: " + p.getEdad()); // Salida: 35
+            
+            // Prueba con edad fuera de rango [cite: 49]
+            p.setEdad(150); 
+            System.out.println("Edad después de intento inválido: " + p.getEdad());
+            
+        } catch (IllegalArgumentException e) {
+            // Captura la excepción y la imprime
+            System.err.println(e.getMessage()); 
+        }
+        
+        try {
+            p.setEdad(-5);
+        } catch (IllegalArgumentException e) {
+            System.err.println(e.getMessage()); 
+        }
+    }
+}
+//--------------------------------------------------------------------------------
+//7. ProductoImportado.java
+class ProductoImportado {
+    // Tasa Representativa de Mercado (TRM) fija
+    private final double TRM = 4000.0;
+    
+    // 1. Propiedad normal de lectura/escritura para PrecioUSD
+    private double precioUSD;
+
+    public double getPrecioUSD() { return precioUSD; }
+    public void setPrecioUSD(double precioUSD) { this.precioUSD = precioUSD; }
+
+    // 2. Propiedad PrecioPesos implementada solo con GET, conteniendo la fórmula
+    public double getPrecioPesos() {
+        // Multiplica el precio en dólares por la TRM 
+        return this.precioUSD * TRM; 
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        ProductoImportado prod = new ProductoImportado();
+        
+        prod.setPrecioUSD(10.0); // Asigna $10
+        System.out.println("Precio USD: " + prod.getPrecioUSD());
+        System.out.println("Precio Pesos (10 USD): " + prod.getPrecioPesos()); // Salida: 40000.0 (10*4000)
+
+        prod.setPrecioUSD(25.5); // Cambia a $25.5
+        // El precio en pesos se actualiza solo (se calcula de nuevo) [cite: 57]
+        System.out.println("Precio Pesos (25.5 USD): " + prod.getPrecioPesos()); // Salida: 102000.0 (25.5*4000)
+    }
+}
+//------------------------------------------------------------------------------------------
+//8. PasswordManager.java
+class PasswordManager {
+    // 1. Variable privada para guardar el PIN
+    private String pinDeAcceso;
+
+    // 2. Implementación de la Propiedad PinDeAcceso con bloque SET, sin bloque GET
+    // NOTA: Se omite el getPinDeAcceso() para hacerlo Write-Only [cite: 62]
+    
+    public void setPinDeAcceso(String nuevoPin) {
+        // Lógica de seguridad o cifrado (aquí simple asignación)
+        this.pinDeAcceso = nuevoPin;
+        System.out.println("PIN de acceso guardado (solo escritura)");
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        PasswordManager safe = new PasswordManager();
+        safe.setPinDeAcceso("1234"); // Asigna un PIN [cite: 63]
+        
+        // Opcional: demostrar que intentar leerla da error
+        // String pin = safe.getPinDeAcceso(); // <--- Esto generaría error de compilación
+    }
+}
+//-----------------------------------------------------------------------------------------
+//9. Empleado.java
+class Empleado {
+    // Variable privada y final para inmutabilidad después de la asignación inicial
+    private final String id; // `final` en Java asegura que solo se asigna una vez
+
+    // 2. Constructor que asigne el valor inicial
+    public Empleado(String idInicial) {
+        this.id = idInicial; // Asignación inicial en el constructor [cite: 69]
+    }
+    
+    // 1. Propiedad ID configurada con GET público
+    public String getId() { 
+        return id; 
+    }
+    
+    // NOTA: No se provee setID(), ya que no puede ser modificado [cite: 66, 68]
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        // Asignación de ID en la creación del objeto
+        Empleado emp = new Empleado("EMP-001"); 
+        
+        System.out.println("ID del Empleado: " + emp.getId()); // Salida: EMP-001
+        
+        // Intento de cambiar el ID (asignación prohibida) [cite: 70]
+        // emp.setId("EMP-002"); // <--- Esto generaría un error de compilación
+    }
+}
+//--------------------------------------------------------------------------------------
+//10. Registro.java
+class Registro {
+    // 1. Variable privada de respaldo
+    private String correoCorporativo;
+
+    public String getCorreoCorporativo() { return correoCorporativo; }
+    
+    // 2. Bloque SET que utilice .contains() para validar
+    public void setCorreoCorporativo(String nuevoCorreo) {
+        // Utiliza el método contains() para validar el formato [cite: 76]
+        if (nuevoCorreo != null && nuevoCorreo.contains("@")) { 
+            this.correoCorporativo = nuevoCorreo;
+            System.out.println("Correo asignado correctamente.");
+        } else {
+            // Rechaza el cambio e imprime "Formato inválido" [cite: 73]
+            System.out.println("Formato inválido. El correo debe contener '@'.");
+        }
+    }
+}
+
+// Main.java
+public class Main {
+    public static void main(String[] args) {
+        Registro reg = new Registro();
+        
+        reg.setCorreoCorporativo("user@empresa.com");
+        System.out.println("Correo actual: " + reg.getCorreoCorporativo());
+        
+        // Prueba con correo inválido [cite: 77]
+        reg.setCorreoCorporativo("usuario.com"); 
+        System.out.println("Correo después de intento inválido: " + reg.getCorreoCorporativo()); // Salida: user@empresa.com (El valor anterior se mantiene)
+    }
+}
