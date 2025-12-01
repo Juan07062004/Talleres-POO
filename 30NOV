@@ -1,0 +1,141 @@
+//Taller HERENCIA - CLASE Y SUBCLASE
+
+//1. public class Producto {
+    // Atributos
+    String codigo;
+    String nombre;
+
+    // Método para imprimir datos
+    public void imprimirDatos() {
+        System.out.println("Código: " + codigo);
+        System.out.println("Nombre: " + nombre);
+    }
+}
+
+public class Perecedero extends Producto {
+    // Atributo propio
+    String fechaCaducidad;
+
+    public static void main(String[] args) {
+        // Instanciar el objeto (crear el producto perecedero)
+        Perecedero p = new Perecedero();
+
+        // Asignar valores (incluyendo los heredados de Producto)
+        p.codigo = "A123";
+        p.nombre = "Leche Deslactosada";
+        p.fechaCaducidad = "2023-12-31";
+
+        // Mostrar en pantalla usando el método heredado y el atributo propio
+        p.imprimirDatos(); // Método de la clase padre
+        System.out.println("Fecha Caducidad: " + p.fechaCaducidad);
+    }
+}
+//---------------------------------------------------------------------------------
+//2. public class Usuario {
+    // Atributos protegidos (visibles para las subclases)
+    protected String username;
+    protected String email;
+
+    public void mostrarLogin() {
+        System.out.println("Login exitoso");
+    }
+}
+
+public class Admin extends Usuario {
+    // Atributo propio
+    String nivelAcceso;
+
+    public static void main(String[] args) {
+        Admin admin = new Admin();
+
+        // Asignamos datos heredados y propios
+        admin.username = "SuperAdmin";
+        admin.email = "admin@redsocial.com";
+        admin.nivelAcceso = "Total"; // 
+
+        // Mostramos la información
+        admin.mostrarLogin(); // Método heredado
+        System.out.println("Usuario: " + admin.username);
+        System.out.println("Email: " + admin.email);
+        System.out.println("Nivel de Acceso: " + admin.nivelAcceso);
+    }
+}
+//-----------------------------------------------------------------------
+//3. public class Vehiculo {
+    String matricula;
+    String modelo;
+
+    public void arrancarMotor() {
+        System.out.println("El motor ha arrancado.");
+    }
+}
+public class Taxi extends Vehiculo {
+    String numeroLicencia;
+
+    public static void main(String[] args) {
+        Taxi miTaxi = new Taxi();
+
+        // Asignar valores
+        miTaxi.matricula = "XYZ-987";
+        miTaxi.modelo = "Toyota Corolla";
+        miTaxi.numeroLicencia = "LIC-001";
+
+        // Usar método heredado [cite: 22]
+        miTaxi.arrancarMotor();
+
+        // Imprimir datos
+        System.out.println("Matrícula: " + miTaxi.matricula);
+        System.out.println("Licencia: " + miTaxi.numeroLicencia);
+    }
+}
+//-----------------------------------------------------------------
+//4. public class Dispositivo {
+    String marca;
+    boolean encendido;
+
+    public void conectarCorriente() {
+        System.out.println("Dispositivo conectado a la corriente.");
+        this.encendido = true; // Cambiamos el estado al conectar
+    }
+}
+public class Televisor extends Dispositivo {
+    int pulgadas;
+
+    public static void main(String[] args) {
+        Televisor tv = new Televisor();
+
+        // Configurar atributos
+        tv.marca = "Samsung";
+        tv.pulgadas = 55;
+
+        // Encender usando método heredado [cite: 30]
+        tv.conectarCorriente();
+
+        // Mostrar consola
+        System.out.println("TV Marca: " + tv.marca);
+        System.out.println("Pulgadas: " + tv.pulgadas);
+        System.out.println("¿Está encendido?: " + tv.encendido);
+    }
+}
+//-----------------------------------------------------------------------
+//5. public class Personal {
+    String nombre;
+    int idEmpleado;
+}
+public class Profesor extends Personal {
+    String especialidad;
+
+    public static void main(String[] args) {
+        Profesor profe = new Profesor();
+
+        // Asignar nombre (heredado) y especialidad (propio) [cite: 39]
+        profe.nombre = "Juan Reina";
+        profe.idEmpleado = 101;
+        profe.especialidad = "Matemáticas";
+
+        // Imprimir valores
+        System.out.println("Nombre Profesor: " + profe.nombre);
+        System.out.println("ID Empleado: " + profe.idEmpleado);
+        System.out.println("Especialidad: " + profe.especialidad);
+    }
+}
